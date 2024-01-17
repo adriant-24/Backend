@@ -1,0 +1,26 @@
+web:
+  cors:
+    allowed-origins: "http://localhost:4200"
+    allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD
+    max-age: 3600
+    allowed-headers: "authorization"
+    exposed-headers: "Authorization"
+jwt:
+  secret: 0e62c3f3c132c8c134557ad3cdb759e4ebf620309f8466610036f6d11e0e3485
+  header: "Authorization"
+  expiration-hours: 48
+spring:
+  jpa:
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.internal.JCacheRegionFactory
+        javax:
+          cache.provider: org.ehcache.jsr107.EhcacheCachingProvider
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
