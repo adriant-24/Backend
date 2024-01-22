@@ -1,4 +1,4 @@
-package com.shop.onlineshop.api.client;
+package com.shop.coreutils.api.client;
 
 
 import org.apache.hc.client5.http.config.RequestConfig;

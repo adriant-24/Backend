@@ -1,7 +1,7 @@
-package com.shop.onlineshop.service;
+package com.shop.coreutils.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.shop.coreutils.api.client.APIClient;
+import com.shop.coreutils.api.client.APIClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class APIService {
 
-//    @Autowired
-//    APIClient apiClient;
+    @Autowired
+    APIClient apiClient;
 
     @Autowired
     ObjectMapper objectMapper;

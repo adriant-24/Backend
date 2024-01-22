@@ -1,7 +1,7 @@
-package com.shop.onlineshop.security;
+package com.shop.ordersservice.security;
 
-import com.shop.onlineshop.filter.AuthenticatedUserLoggingFilter;
-import com.shop.onlineshop.filter.CsrfCookieFilter;
+import com.shop.ordersservice.filter.AuthenticatedUserLoggingFilter;
+import com.shop.ordersservice.filter.CsrfCookieFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,43 +24,10 @@ public class SecurityConfiguration {
 
     CorsConfigProperties corsConfigProperties;
 
-  //  JWTTokenValidatorFilter jwtTokenValidatorFilter;
-  //  JWTTokenGeneratorFilter jwtTokenGeneratorFilter;
-
     @Autowired
     public SecurityConfiguration(CorsConfigProperties corsConfigProperties){
         this.corsConfigProperties = corsConfigProperties;
     }
-//    @Bean
-//    public BCryptPasswordEncoder bCryptPasswordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider(UserServiceImpl userService){
-//        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-//        auth.setUserDetailsService(userService);
-//        auth.setPasswordEncoder(bCryptPasswordEncoder());
-//        return auth;
-//    }
-//AuthorizationFilter
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsManager(){
-//
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password("{noop}admin")
-//                .roles("REGULAR_USER","ADMIN")
-//                .build();
-//        UserDetails user1 = User.builder()
-//                .username("user1")
-//                .password("{noop}user1")
-//                .roles("REGULAR_USER")
-//                .build();
-//        Collection<UserDetails> users = new ArrayList<>();
-//        users.add(admin);
-//        users.add(user1);
-//        return new InMemoryUserDetailsManager(users);
-//    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception {
 
@@ -83,10 +50,9 @@ public class SecurityConfiguration {
                     configurer
                            .requestMatchers("/swagger-ui/**"," /v3/api-docs/**",
                                    "/actuator/**",
-                                   "/actuator",
-                                   "/api/categories","/api/products/**", "/api/products", "/api/product").permitAll()
+                                   "/actuator").permitAll()
 //                               .requestMatchers("/items/showAddItemForm").hasRole("ADMIN")
-                            .requestMatchers("/api/user/**", "/api/order").authenticated()
+                            .requestMatchers("/api/orders","/api/purchase").authenticated()
             )
             .oauth2ResourceServer (configurer->
                     configurer.
