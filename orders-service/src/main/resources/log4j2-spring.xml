@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
+    <Properties>
+        <Property name="LOG_PATTERN_CONSOLE" value="%style{%d{ISO8601}}{black} %highlight{%-5level } [%style{${spring:spring.application.name}}{bright blue},%style{%X{traceId}}{bright green},%style{%X{spanId}}{bright cyan}] [%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable" />
+        <Property name="LOG_PATTERN_FILE" value="%d{ISO8601} %-5level [${spring:spring.application.name},%X{traceId},%X{spanId}] [%t] %C{1.}: %msg%n%throwable" />
+
+        <Property name="LOG_DIR" value="%d %p %C{1.} [%t] %m%n" />
+        <Property name="SYSTEM_FILE" value="application.log" />
+    </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout
-                    pattern="%style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable" />
+            <PatternLayout pattern="${LOG_PATTERN_CONSOLE}"/>
+
         </Console>
 
         <RollingFile name="RollingFile"
                      fileName="./logs/spring-boot-logger-log4j2.log"
                      filePattern="./logs/$${date:yyyy-MM}/spring-boot-logger-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
             <PatternLayout>
-                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+                <pattern>${LOG_PATTERN_FILE}</pattern>
             </PatternLayout>
             <Policies>
                 <!-- rollover on startup, daily and when the file reaches
@@ -46,6 +53,10 @@
             <appender-ref ref="Console" />
         </logger>
         <logger name="org.springframework.security" level="debug" additivity="false">
+            <appender-ref ref="RollingFile" />
+            <appender-ref ref="Console" />
+        </logger>
+        <logger name="org.springframework.web" level="debug" additivity="false">
             <appender-ref ref="RollingFile" />
             <appender-ref ref="Console" />
         </logger>

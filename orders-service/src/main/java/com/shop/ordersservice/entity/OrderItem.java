@@ -34,7 +34,7 @@ public class OrderItem {
     @Column(name = "product_id")
     private Long productId;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "order_id")
     private Order order;
 

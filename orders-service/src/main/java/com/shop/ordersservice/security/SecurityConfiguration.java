@@ -38,10 +38,10 @@ public class SecurityConfiguration {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloackRoleConverter());
 
         http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .cors(corsConfigurer-> corsConfigurer.configurationSource(corsConfigurationSource()))
+         //   .cors(corsConfigurer-> corsConfigurer.configurationSource(corsConfigurationSource()))
             .csrf(csrf->
                     csrf.csrfTokenRequestHandler(requestAttributeHandler)
-                    .ignoringRequestMatchers("/api/categories","/api/products/**", "/api/products", "/api/product")
+                    .ignoringRequestMatchers("/actuator/**", "/api/testRefresh","/api/categories","/api/products/**", "/api/products", "/api/product")
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             )
             .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
@@ -49,7 +49,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(configurer->
                     configurer
                            .requestMatchers("/swagger-ui/**"," /v3/api-docs/**",
-                                   "/actuator/**",
+                                   "/actuator/**","/api/testRefresh",
                                    "/actuator").permitAll()
 //                               .requestMatchers("/items/showAddItemForm").hasRole("ADMIN")
                             .requestMatchers("/api/orders","/api/purchase").authenticated()

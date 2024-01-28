@@ -10,6 +10,8 @@ import com.shop.ordersservice.mapper.PurchaseMapper;
 import com.shop.ordersservice.service.OrderService;
 import com.shop.coreutils.utils.PageableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RefreshScope
 @RequestMapping("/api")
-
 public class OrderController {
 
     OrderService orderService;
@@ -50,6 +52,13 @@ public class OrderController {
                 findByUserId(userId, PageableUtils.createPageable(page,size,sort)).
                 map(OrderMapper::orderToOrderDto);
         return PageableUtils.preparePaginatedResponse("orders", pageOrders);
+    }
+
+    @Value("${myValue.test}")
+    String myValue;
+    @GetMapping("/testRefresh")
+    public String refresh(){
+        return "myValue: " + myValue;
     }
 
 
