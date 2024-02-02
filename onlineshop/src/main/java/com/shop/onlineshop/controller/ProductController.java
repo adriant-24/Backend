@@ -1,10 +1,10 @@
 package com.shop.onlineshop.controller;
 
+import com.shop.coreutils.utils.PageableUtils;
 import com.shop.onlineshop.dto.ProductCategoryDto;
 import com.shop.onlineshop.dto.ProductDto;
 import com.shop.onlineshop.mapper.ProductMapper;
 import com.shop.onlineshop.service.ProductService;
-import com.shop.onlineshop.utils.PageableUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
 public class ProductController {
     ProductService productService;
 

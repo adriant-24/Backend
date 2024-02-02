@@ -1,0 +1,40 @@
+server:
+  port: 8888
+
+eureka:
+  instance:
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    client:
+      serverUrl:
+        defaultZone: "http://localhost:8761/eureka/"
+
+spring:
+
+  application:
+    name: CONFIG-SERVER
+  #git config files repo
+#  profiles:
+#    active: native
+  cloud:
+    config:
+      server:
+#        native:
+#          searchLocations: file:///C:/temp/config
+        git:
+          uri: "https://github.com/adriant-24/os-config-server-repo"
+          clone-on-start: true
+          default-label: main
+#          skipSslValidation: true
+#          repos:
+#            local:
+#              pattern: local*
+#              uri: "file:///C:/temp/config"
+          username: adriant-24
+          password: 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
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: always

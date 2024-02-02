@@ -1,0 +1,59 @@
+server:
+  port: 9191
+
+eureka:
+  instance:
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    #prefer-ip-address: true
+    client:
+      serverUrl:
+        defaultZone: "http://localhost:8761/eureka/"
+
+spring:
+  application:
+    name: API-GATEWAY
+  #Routes for OnlineShop service
+  cloud:
+    gateway:
+      filter:
+        remove-hop-by-hop:
+          headers: connection, keep-alive
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes[0]:
+        id: ONLINESHOP-SERVICE
+        uri: "lb://ONLINESHOP-SERVICE"
+        predicates[0]: "Path=/api/categories, /api/products/**, /api/product, /api/user/**, /api/order"
+      routes[1]:
+        id: ORDERS-SERVICE
+        uri: "lb://ORDERS-SERVICE"
+        predicates[0]: "Path=/api/orders, /api/purchase, /api/testRefresh"
+
+#actuator management
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: always
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    org.springframework.web.HttpLogging: TRACE
+    reactor.netty.http.server: DEBUG
+    reactor.netty.http.client: DEBUG
+
+

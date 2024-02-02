@@ -15,7 +15,7 @@ public interface UserService extends UserDetailsService {
 
     public User findByIdJoinFetchAddress(Long id);
 
-    public List<Address> findAllAddressesByUserId(Long id);
+    public List<Address> findAllAddressesByUserName(String userName);
 
     public Address saveAddress(Address address);
 

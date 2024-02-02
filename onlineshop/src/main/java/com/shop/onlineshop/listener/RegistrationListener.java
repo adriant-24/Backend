@@ -1,17 +1,16 @@
 package com.shop.onlineshop.listener;
 
-import com.shop.onlineshop.dto.EmailDetails;
+import com.shop.coreutils.model.EmailDetails;
+import com.shop.coreutils.service.EmailService;
 import com.shop.onlineshop.entity.User;
 import com.shop.onlineshop.entity.VerificationToken;
 import com.shop.onlineshop.event.OnRegistrationCompleteEvent;
-import com.shop.onlineshop.service.EmailService;
 import com.shop.onlineshop.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.util.UUID;
 

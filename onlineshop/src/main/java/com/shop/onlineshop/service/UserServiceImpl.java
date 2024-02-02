@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService{
         return userRepository.findByIdJoinFetchAddress(id);
     }
 
-    public List<Address> findAllAddressesByUserId(Long id) {
-        return addressRepository.findAllByUserId(id);
+    public List<Address> findAllAddressesByUserName(String userName) {
+        return addressRepository.findAllByUserName(userName);
     }
 
     public Address saveAddress(Address address) {
