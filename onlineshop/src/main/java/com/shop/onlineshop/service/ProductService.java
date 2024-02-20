@@ -1,8 +1,8 @@
 package com.shop.onlineshop.service;
 
+import com.shop.coreutils.exception.ResourceNotFoundException;
 import com.shop.onlineshop.entity.Product;
 import com.shop.onlineshop.entity.ProductCategory;
-import com.shop.onlineshop.exception.ResourceNotFoundException;
 import com.shop.onlineshop.repository.ProductCategoryRepository;
 import com.shop.onlineshop.repository.ProductRepository;
 import jakarta.transaction.Transactional;
@@ -68,5 +68,20 @@ public class ProductService {
     @Transactional
     public void deleteById(Long id){
         productRepository.deleteById(id);
+    }
+
+    public ProductCategory saveProductCategory(ProductCategory productCategory) {
+
+       return productCategoryRepository.save(productCategory);
+    }
+
+    public ProductCategory findCategoryByProductCategoryId(long productCategoryId) {
+
+        return productCategoryRepository.findByProductCategoryId(productCategoryId);
+    }
+
+    public void deleteProductCategory(long categoryId) {
+
+        productCategoryRepository.deleteById(categoryId);
     }
 }

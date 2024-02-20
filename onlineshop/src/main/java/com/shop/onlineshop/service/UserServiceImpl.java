@@ -1,9 +1,6 @@
 package com.shop.onlineshop.service;
 
-import com.shop.onlineshop.dto.WebUser;
 import com.shop.onlineshop.entity.*;
-import com.shop.onlineshop.exception.UserAlreadyExistsException;
-import com.shop.onlineshop.mapper.UserMapper;
 import com.shop.onlineshop.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +45,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public User findUserById(Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElse(null);
     }
     public User findByIdUserOnly(Long id) {
         return userRepository.findByIdUserOnly(id);
@@ -68,13 +63,31 @@ public class UserServiceImpl implements UserService{
         return addressRepository.save(address);
     }
 
-    public void deleteAddress(Address address) {
-        addressRepository.delete(address);
+    public Address findAddressById(long id){
+        return addressRepository.findById(id).orElse(null);
     }
+
+    public void deleteAddressById(long id) {
+        addressRepository.deleteById(id);
+    }
+
+    public void deleteAddressFromUserById(long id) {
+        Address address = addressRepository.findById(id).orElse(null);
+        if(address == null)
+            return;
+        User user = address.getUser();
+        user.removeAddress(address);
+        userRepository.save(user);
+    }
+
 
     public User save (User user){
         return userRepository.save(user);
     }
+    public void deleteUserById (long userId){
+        userRepository.deleteById(userId);
+    }
+
 
 //    public User registerUser (WebUser webUser) throws UserAlreadyExistsException {
 //

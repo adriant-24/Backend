@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
-    @Query(nativeQuery = true, value ="Select ui.* from User u, User_Info ui where u.user_id = ui.user_id and u.username = :userName")
+    @Query(value ="Select ui from UserInfo ui inner join ui.user u where u.username = :userName")
     UserInfo findUserInfoByUserName(@Param("userName") String userName);
 }

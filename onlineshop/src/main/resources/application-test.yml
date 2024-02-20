@@ -1,0 +1,95 @@
+#server:
+#  port: 8081
+#
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+#    client:
+#      serverUrl:
+#        defaultZone: "http://localhost:8761/eureka/"
+#
+web:
+  cors:
+    allowed-origins: "http://localhost:4200, http://localhost:9191"
+    allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD
+    max-age: 3600
+    allowed-headers: "authorization"
+    exposed-headers: "Authorization"
+jwt:
+  secret: 0e62c3f3c132c8c134557ad3cdb759e4ebf620309f8466610036f6d11e0e3485
+  header: "Authorization"
+  expiration-hours: 48
+
+spring:
+  application:
+    name: ONLINESHOP-SERVICE
+#  config:
+#    import: "optional:configserver:http://localhost:8888"
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: test_user
+#    password: test_user
+#  main:
+#    banner-mode: off
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://localhost:8180/realms/onlineshop-dev/protocol/openid-connect/certs"
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/shopqa1
+#    username: admin
+#    password: admin
+#  jpa:
+#    properties:
+#      hibernate:
+#        cache:
+#          use_second_level_cache: true
+#          use_query_cache: true
+#          region:
+#            factory_class: org.hibernate.cache.jcache.internal.JCacheRegionFactory
+#        javax:
+#          cache.provider: org.ehcache.jsr107.EhcacheCachingProvider
+#      jakarta:
+#        persistence:
+#          sharedCache:
+#            mode: ENABLE_SELECTIVE
+#
+#
+##actuator management
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+#    health:
+#      show-details: always
+#management.security.enabled: false
+#endpoints.health.sensitive: false
+#management:
+#  health:
+#    solr:
+#      enabled: false
+resilience4j:
+  circuitbreaker:
+    instances:
+      ONLINESHOP-SERVICE:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+retry:
+  maxAttempts: 3
+  waitDuration: 2 #value in seconds
+#  retry:
+#    instances:
+#      ONLINESHOP-SERVICE:
+#        registerHealthIndicator: true
+#        maxAttempts: 50
+#        waitDuration: 2 #value in seconds

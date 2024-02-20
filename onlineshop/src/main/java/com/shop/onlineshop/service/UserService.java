@@ -13,18 +13,27 @@ public interface UserService extends UserDetailsService {
     public User findUserById(Long id);
     public User findByIdUserOnly(Long id);
 
+    public User findByUserName(String username);
+
+    public Long findUserIdByName(String userName);
+
     public User findByIdJoinFetchAddress(Long id);
+
+    public User save (User user);
+
+    public UserInfo findUserInfoByUserName(String userName);
+
+    public void deleteUserById (long userId);
 
     public List<Address> findAllAddressesByUserName(String userName);
 
     public Address saveAddress(Address address);
 
-    public void deleteAddress(Address address);
-    public User save (User user);
-  //  public User registerUser (WebUser webUser) throws UserAlreadyExistsException;
-    public User findByUserName(String username);
+    public Address findAddressById(long id);
+    public void deleteAddressFromUserById(long id);
+    public void deleteAddressById(long id);
+
     public VerificationToken findByToken(String token);
     public VerificationToken createToken(String token, User user);
-    public Long findUserIdByName(String userName);
-    public UserInfo findUserInfoByUserName(String userName);
+
 }

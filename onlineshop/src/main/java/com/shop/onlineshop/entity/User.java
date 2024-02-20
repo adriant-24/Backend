@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "user")
+@Table(name = "`user`")
 public class User {
 
     @Id
@@ -39,9 +39,9 @@ public class User {
         enabled = 0;
     }
 
-    @OneToMany(mappedBy ="user",
+    @OneToMany(mappedBy ="user", orphanRemoval = true,
             fetch = FetchType.EAGER,
-            cascade= CascadeType.ALL)
+            cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
   //  @JoinColumn(name = "user_id")
     List<Address> addresses;
 

@@ -82,7 +82,7 @@ public class ProductController {
     }
 
     @PutMapping("/products")
-    public ProductDto updateProduct(@RequestParam("id")Long productId, @RequestBody ProductDto productDto){
+    public ProductDto updateProduct(@RequestBody ProductDto productDto){
 
         return ProductMapper.productToProductDto(productService.save(ProductMapper.productDtoToProduct(productDto)));
     }

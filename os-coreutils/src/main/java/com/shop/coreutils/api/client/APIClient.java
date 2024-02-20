@@ -37,13 +37,19 @@ public class APIClient {
 //    int maxTotalConnectionsPerRoute;
 
 
-    @Autowired
+
     RestTemplate restTemplate;
 
     @Autowired
+    public APIClient(RestTemplate restTemplate, EurekaClient discoveryClient, RetryConfig retryConfig){
+        this.restTemplate = restTemplate;
+        this.discoveryClient = discoveryClient;
+        this.retryConfig = retryConfig;
+
+    }
+
     EurekaClient discoveryClient;
 
-    @Autowired
     RetryConfig retryConfig;
 
 

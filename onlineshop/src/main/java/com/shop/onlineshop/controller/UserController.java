@@ -3,9 +3,12 @@ package com.shop.onlineshop.controller;
 //import com.shop.coreutils.api.client.APIClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.coreutils.api.client.APIClient;
+import com.shop.coreutils.utils.PageableUtils;
 import com.shop.onlineshop.dto.AddressDto;
+import com.shop.onlineshop.dto.OrderDto;
 import com.shop.onlineshop.dto.WebUser;
 import com.shop.onlineshop.mapper.AddressMapper;
+import com.shop.onlineshop.mapper.OrderMapper;
 import com.shop.onlineshop.mapper.UserMapper;
 import com.shop.onlineshop.service.OrderService;
 import com.shop.onlineshop.service.UserService;
@@ -14,6 +17,7 @@ import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.LinkedMultiValueMap;
@@ -37,7 +41,9 @@ public class UserController {
     APIClient apiClient;
     ObjectMapper objectMapper;
     @Autowired
-    public UserController(UserService userService, OrderService orderService, APIClient apiClient){
+    public UserController(UserService userService,
+                          OrderService orderService,
+                          APIClient apiClient){
         this.userService = userService;
         this.orderService = orderService;
         this.apiClient = apiClient;
@@ -66,7 +72,7 @@ public class UserController {
 
     }
     @GetMapping("/orders")
-    public ResponseEntity<Map<String,Object>> getOrderByUserId(HttpServletRequest request,
+    public ResponseEntity<Map<String,Object>> getOrderByUserName(HttpServletRequest request,
                                                                @RequestParam(name="userName") String userName,
                                                                @RequestParam(defaultValue = "0") int page,
                                                                @RequestParam(defaultValue = "10") int size,

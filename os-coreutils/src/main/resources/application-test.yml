@@ -1,0 +1,35 @@
+aws:
+  accessKey: AKIA4MTWHGBFYXD76JUY
+  secretAccessKey: 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
+  bucketName: online-shop-storage-bucket
+  region: eu-north-1
+
+spring:
+  application:
+    name: CORE-UTILS
+  mail:
+    host: smtp.gmail.com
+    username: adriantufis24@gmail.com
+    password: ffqd otyg hjcm tdas
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      ONLINESHOP-SERVICE:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+retry:
+  maxAttempts: 3
+  waitDuration: 2 #value in seconds

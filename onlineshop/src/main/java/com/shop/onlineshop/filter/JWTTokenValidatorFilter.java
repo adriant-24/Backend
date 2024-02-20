@@ -1,6 +1,6 @@
 package com.shop.onlineshop.filter;
 
-import com.shop.onlineshop.exception.JWTTokenException;
+import com.shop.coreutils.exception.JWTTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
