@@ -39,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Sql(scripts={"/test-sql-files/insertProductCategoryAndProducts.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@Sql(scripts={"/test-sql-files/deleteAllProductCategoriesAndProducts.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 public class ProductControllerTest {
 
     @Autowired

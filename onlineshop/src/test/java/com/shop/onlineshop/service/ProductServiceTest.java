@@ -3,6 +3,7 @@ package com.shop.onlineshop.service;
 import com.shop.onlineshop.entity.Product;
 import com.shop.onlineshop.entity.ProductCategory;
 import com.shop.onlineshop.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
 @SpringBootTest
 @AutoConfigureTestDatabase
 @ActiveProfiles("test")
@@ -54,15 +56,17 @@ public class ProductServiceTest {
                 .unitPrice(BigDecimal.valueOf(30.3))
                 .unitsInStock(15)
                 .build();
+
+
     }
 
     @BeforeEach
     void createProductCategoryAndProduct(){
         jdbcTemplate.execute("INSERT INTO product_category(product_category_id, category_name) VALUES (15, 'Books')");
         jdbcTemplate.execute("INSERT INTO product (product_id,upc, name, description, image_url, active, units_in_stock, unit_price, product_category_id,date_created) VALUES " +
-                "(1, 'BOOK-TECH-1000', 'Crash Course in Python', 'Learn Python at your own pace. The author explains how the technology works in easy-to-understand language. This book includes working examples that you can apply to your own projects. Purchase the book and get started today!', 'assets/images/products/books/book-1000.png', 1, 100, 14.99, 15, NOW())");
+                "(1000, 'BOOK-TECH-1000', 'Crash Course in Python', 'Learn Python at your own pace. The author explains how the technology works in easy-to-understand language. This book includes working examples that you can apply to your own projects. Purchase the book and get started today!', 'assets/images/products/books/book-1000.png', 1, 100, 14.99, 15, NOW())");
         jdbcTemplate.execute("INSERT INTO product (product_id,upc, name, description, image_url, active, units_in_stock, unit_price, product_category_id,date_created) VALUES " +
-                "(2, 'BOOK-TECH-1001', 'Book2', 'Test 2 book', 'assets/images/products/books/book-1000.png', 1, 100, 14.99, 15, NOW())");
+                "(1001, 'BOOK-TECH-1001', 'Book2', 'Test 2 book', 'assets/images/products/books/book-1000.png', 1, 100, 14.99, 15, NOW())");
 
     }
 
@@ -72,7 +76,7 @@ public class ProductServiceTest {
         jdbcTemplate.execute("Delete from product_category where product_category_id = 15");
     }
     Condition<Product> productIdCondition = new Condition<>(
-            p-> p.getProductId() == 1L, "expected the Product Id to be be 1.");
+            p-> p.getProductId() == 1000L, "expected the Product Id to be be 1.");
     Condition<Product> productUPCCondition = new Condition<>(
             p-> p.getUpc().equals("BOOK-TECH-1000"), "expected the Product UPC to be be 'BOOK-TECH-1000'.");
 
@@ -80,6 +84,15 @@ public class ProductServiceTest {
             p-> p.getUpc().equals("BOOK-TECH-1001"), "expected the Product UPC to be be 'BOOK-TECH-1000'.");
 
 
+
+    @Test
+    @Order(0)
+
+    void productCategoriesNumberIs1(){
+       List<ProductCategory> productCategories = productService.getAllProductCategories();
+
+       assertEquals(productCategories.size(),1);
+    }
     @Test
     @Order(1)
     void createProductCategory(){
@@ -116,8 +129,8 @@ public class ProductServiceTest {
     @Order(11)
     void findProductById (){
 
-        Product product = productService.getProductById(1L);
-
+        Product product = productService.getProductById(1000L);
+        log.info("ZZZZZZZZZZZZZZ: "+ product.toString());
         assertThat(product)
                 .isNotNull()
                 .has(productIdCondition)

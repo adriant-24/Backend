@@ -1,0 +1,52 @@
+services:
+    zipkin:
+      image: openzipkin/zipkin:latest
+      container_name: zipkin
+      ports:
+        - 9411:9411
+    
+    rabbitmq:
+      image: rabbitmq:3.12
+      container_name: rabbitmq
+      ports:
+        - 5672:5672
+
+    os-service-registry:
+      container_name: os-service-registry
+      build:
+        context: ./os-service-registry
+        dockerfile: Dockerfile
+      ports:
+        - 8761:8761
+        
+    os-config-server:
+      container_name: os-config-server
+      build:
+        context: ./os-config-server
+        dockerfile: Dockerfile
+      ports:
+        - 8888:8888
+        
+    os-api-gateway:
+      container_name: os-api-gateway
+      build:
+        context: ./os-api-gateway
+        dockerfile: Dockerfile
+      ports:
+        - 9191:9191
+        
+    orders-service:
+      container_name: orders-service
+      build:
+        context: ./orders-service
+        dockerfile: Dockerfile
+      ports:
+        - 8083:8083
+    
+    onlineshop-service:
+      container_name: onlineshop-service
+      build:
+        context: ./onlineshop
+        dockerfile: Dockerfile
+      ports:
+        - 8081:8081

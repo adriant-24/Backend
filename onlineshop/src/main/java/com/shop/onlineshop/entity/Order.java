@@ -54,6 +54,7 @@ public class Order {
     @UpdateTimestamp
     private Date lastUpdated;
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     Set<OrderItem> orderItems = new HashSet<>();
 

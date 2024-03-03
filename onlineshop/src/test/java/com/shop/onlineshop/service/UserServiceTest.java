@@ -191,12 +191,4 @@ public class UserServiceTest {
         List<Address> addressList = userService.findAllAddressesByUserName("john.tuck");
         assertTrue(addressList.isEmpty(),"Address list should be empty");
     }
-
-    @Test
-    @Order(11)
-    @Disabled
-    void findUserByName(){
-
-        fail("test failed");
-    }
 }

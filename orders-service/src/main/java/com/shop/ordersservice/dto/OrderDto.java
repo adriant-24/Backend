@@ -37,6 +37,7 @@ public class OrderDto {
 
     private Date lastUpdated;
 
+    @Builder.Default
     Set<OrderItemDto> orderItems = new HashSet<>();
 
     ContactInfoDto shippingContactInfo;

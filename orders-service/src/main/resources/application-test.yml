@@ -21,6 +21,10 @@ jwt:
   header: "Authorization"
   expiration-hours: 48
 
+eureka:
+  client:
+    enabled: false
+
 spring:
   application:
     name: ORDERS-SERVICE
