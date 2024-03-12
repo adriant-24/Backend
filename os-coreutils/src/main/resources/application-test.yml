@@ -1,22 +1,25 @@
+
 aws:
-  accessKey: AKIA4MTWHGBFYXD76JUY
-  secretAccessKey: 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
-  bucketName: online-shop-storage-bucket
-  region: eu-north-1
+  accessKey: ${AWS_ACCESSKEY}
+  secretAccessKey: ${AWS_SECRETACCESSKEY}
+  bucketName: ${AWS_BUCKETNAME}
+  region: ${AWS_REGION}
 
 spring:
   application:
     name: CORE-UTILS
+  config:
+    import: "file:../../../.env[.properties]"
   mail:
-    host: smtp.gmail.com
-    username: adriantufis24@gmail.com
-    password: ffqd otyg hjcm tdas
+    host: ${MAIL_HOST}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
-          auth: true
+          auth: ${MAIL_SMTP_AUTH}
           starttls:
-            enable: true
+            enable: ${MAIL_SMTP_STARTTLS}
 
 resilience4j:
   circuitbreaker:

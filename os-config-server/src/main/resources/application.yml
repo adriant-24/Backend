@@ -18,8 +18,6 @@ spring:
   cloud:
     config:
       server:
-#        native:
-#          searchLocations: file:///C:/temp/config
         git:
           uri: "https://github.com/adriant-24/os-config-server-repo"
           clone-on-start: true
@@ -29,8 +27,8 @@ spring:
 #            local:
 #              pattern: local*
 #              uri: "file:///C:/temp/config"
-          username: adriant-24
-          password: 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
+          username: ${GIT_USER}
+          password: ${GIT_PASSWORD}
 management:
   endpoints:
     web:

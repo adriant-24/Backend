@@ -2,3 +2,4 @@
 /.idea/
 /hs_err_pid25144.log
 /compose.yml.bak
+/.env
